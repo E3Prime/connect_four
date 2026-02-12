@@ -48,10 +48,10 @@
 
       <!-- ANCHOR Game -->
       <section id="game" class="relative h-full grid place-items-center transition-discrete transition-opacity px-3">
-        <div class="max-w-225 max-h-175 w-full aspect-9/16 space-y-5 p-3 border border-blue-500">
+        <div class="max-w-175 w-full aspect-square space-y-5 p-3 border border-blue-500">
           <div class="flex justify-between max-w-150 mx-auto font-semibold text-white">
             <div>
-              <button type="button" class="bg-[#5c2dd5] rounded-full px-7 py-2">Menu</button>
+              <button id="openGameMenu" type="button" class="bg-[#5c2dd5] rounded-full px-7 py-2 cursor-pointer">Menu</button>
             </div>
             <img src="src/assets/images/logo.svg" alt="logo icon" width="50" height="50" />
             <div>
@@ -78,7 +78,20 @@
               </div>
             </div>
 
-            <div id="board" class="grid grid-cols-7 gap-3 relative z-10 bg-indigo-50 p-1.5 rounded-lg"></div>
+            <div class="relative max-w-132.5 aspect-square w-full mx-auto">
+              <div id="board" class="absolute inset-0 z-0 grid grid-cols-7 grid-rows-6 w-full h-full pt-1 px-1.5 pb-8"></div>
+
+              <img src="src/assets/images/board-layer-black-small.svg" alt="Board Shadow" class="absolute inset-0 z-10 w-full h-full pointer-events-none translate-y-1.5 opacity-80" />
+
+              <img src="src/assets/images/board-layer-white-small.svg" alt="Game Board" class="absolute w-full h-full z-20 pointer-events-none select-none block" />
+            </div>
+          </div>
+        </div>
+        <div id="gameMenuOverlay" class="absolute transition-all duration-700 w-2 grid place-items-center z-40" hidden>
+          <div class="max-w-100 w-full aspect-video rounded-lg transition-all duration-500 content-center space-y-4 scale-[0.5] opacity-0 bg-[#7945ff] text-indigo-50 text-center p-4">
+            <h2 class="uppercase text-2xl font-semibold">PAUSE</h2>
+            <button id="continue" type="button" class="bg-white text-xl uppercase font-bold cursor-pointer">Continue</button>
+            <button id="quit" type="button" class="bg-[#fd6687] text-xl uppercase font-bold cursor-pointer hover:underline">Quit Game</button>
           </div>
         </div>
       </section>

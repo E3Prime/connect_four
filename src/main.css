@@ -20,7 +20,7 @@
   background-color: rgb(0 0 0 / 0.4);
 }
 
-.difficulty-options-reveal {
+.options-reveal {
   transform: scale(2);
 
   @starting-style {
