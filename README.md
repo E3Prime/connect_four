@@ -11,7 +11,7 @@ The classic connect four game which features a difficulty system and timer mecha
 
 ## 🔗 Links
 
-- **Live Demo Link:**
+- **Live Demo Link:** https://e3prime.github.io/connect_four
 
 ## 🔴 Connect Four Showcase
 
