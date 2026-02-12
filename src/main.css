@@ -37,3 +37,33 @@
 
   opacity: 1;
 }
+
+@keyframes dropIn {
+  0% {
+    transform: translateY(-500px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-drop {
+  animation: dropIn 0.5s ease-in forwards;
+}
+
+.turn-timer {
+  background-image: url("/src/assets/images/turn-background-red.svg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}

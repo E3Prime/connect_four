@@ -11,7 +11,7 @@
   <body class="min-h-svh grid">
     <main class="grid font-[Roboto] bg-[#7945ff] overflow-x-hidden">
       <!-- ANCHOR Main Menu -->
-      <section class="relative h-full grid place-items-center px-3" hidden>
+      <section class="relative h-full grid place-items-center px-3">
         <div id="menu" class="max-w-125 aspect-square w-full transition-transform duration-1000 content-center rounded-lg shadow-sm shadow-black border-3 border-black text-white p-7">
           <img src="src/assets/images/logo.svg" alt="logo icon" class="mx-auto mb-6" />
           <div class="flex flex-col justify-center gap-4 max-w-[90%] mx-auto">
@@ -47,15 +47,15 @@
       </section>
 
       <!-- ANCHOR Game -->
-      <section id="game" class="relative h-full grid place-items-center transition-discrete transition-opacity px-3">
-        <div class="max-w-175 w-full aspect-square space-y-5 p-3 border border-blue-500">
+      <section id="game" class="relative h-full grid place-items-center duration-500 transition-discrete transition-opacity opacity-0 px-3" hidden>
+        <div class="max-w-175 w-full aspect-square space-y-5 p-3">
           <div class="flex justify-between max-w-150 mx-auto font-semibold text-white">
             <div>
               <button id="openGameMenu" type="button" class="bg-[#5c2dd5] rounded-full px-7 py-2 cursor-pointer">Menu</button>
             </div>
             <img src="src/assets/images/logo.svg" alt="logo icon" width="50" height="50" />
             <div>
-              <button type="button" class="bg-[#5c2dd5] rounded-full px-7 py-2">Restart</button>
+              <button id="restartGame" type="button" class="bg-[#5c2dd5] rounded-full px-7 py-2">Restart</button>
             </div>
           </div>
 
@@ -65,7 +65,7 @@
                 <img class="relative -ms-7" src="src/assets/images/you.svg" alt="player icon" width="45" height="45" />
                 <div class="flex-1 flex flex-col text-center font-semibold text-xl">
                   <span>YOU</span>
-                  <span>0</span>
+                  <span id="scorePlayer">0</span>
                 </div>
               </div>
 
@@ -73,7 +73,7 @@
                 <img class="relative -me-7" src="src/assets/images/cpu.svg" alt="cpu icon" width="45" height="45" />
                 <div class="flex-1 flex flex-col text-center font-semibold text-xl">
                   <span>CPU</span>
-                  <span>0</span>
+                  <span id="scoreCpu">0</span>
                 </div>
               </div>
             </div>
@@ -81,17 +81,51 @@
             <div class="relative max-w-132.5 aspect-square w-full mx-auto">
               <div id="board" class="absolute inset-0 z-0 grid grid-cols-7 grid-rows-6 w-full h-full pt-1 px-1.5 pb-8"></div>
 
-              <img src="src/assets/images/board-layer-black-small.svg" alt="Board Shadow" class="absolute inset-0 z-10 w-full h-full pointer-events-none translate-y-1.5 opacity-80" />
+              <div id="turnTimer" class="turn-timer grid hidden absolute -bottom-30 left-1/2 transform -translate-x-1/2 z-40 place-items-center w-40 aspect-square text-white">
+                <div class="space-y-2 text-center">
+                  <span class="text-sm font-bold uppercase tracking-widest">Your Turn</span>
+                  <div class="text-6xl font-black"><span id="timerCount">20</span>s</div>
+                </div>
+              </div>
 
-              <img src="src/assets/images/board-layer-white-small.svg" alt="Game Board" class="absolute w-full h-full z-20 pointer-events-none select-none block" />
+              <div
+                id="winnerCard"
+                class="absolute -bottom-30 left-1/2 transform -translate-x-1/2 z-50 hidden flex-col items-center justify-center w-72 bg-white border-2 border-black shadow-[0_4px_0_0_rgba(0,0,0,1)] rounded-xl py-4">
+                <span id="winnerText" class="text-xs font-bold tracking-widest uppercase mb-1">PLAYER 1</span>
+
+                <h2 class="text-4xl font-black uppercase mb-3">WINS</h2>
+
+                <button
+                  id="playAgain"
+                  class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold py-3 px-6 rounded-full shadow-[0_4px_0_0_rgba(0,0,0,1)] active:translate-y-1 active:shadow-none transition-transform uppercase">
+                  Play Again
+                </button>
+              </div>
+
+              <div id="marker" class="absolute -top-8 w-[14.28%] flex justify-center transition-transform duration-100 ease-out z-30 hidden">
+                <img src="src/assets/images/marker-red.svg" alt="Marker" />
+              </div>
+              <img src="src/assets/images/board-layer-black.svg" alt="Board Shadow" class="absolute inset-0 z-10 w-full h-full pointer-events-none translate-y-1.5 opacity-80" />
+              <img src="src/assets/images/board-layer-white.svg" alt="Game Board" class="absolute w-full h-full z-20 pointer-events-none select-none block" />
             </div>
           </div>
         </div>
         <div id="gameMenuOverlay" class="absolute transition-all duration-700 w-2 grid place-items-center z-40" hidden>
-          <div class="max-w-100 w-full aspect-video rounded-lg transition-all duration-500 content-center space-y-4 scale-[0.5] opacity-0 bg-[#7945ff] text-indigo-50 text-center p-4">
-            <h2 class="uppercase text-2xl font-semibold">PAUSE</h2>
-            <button id="continue" type="button" class="bg-white text-xl uppercase font-bold cursor-pointer">Continue</button>
-            <button id="quit" type="button" class="bg-[#fd6687] text-xl uppercase font-bold cursor-pointer hover:underline">Quit Game</button>
+          <div
+            class="max-w-100 w-11/12 aspect-square rounded-lg flex flex-col transition-all duration-500 justify-center space-y-4 scale-[0.5] opacity-0 bg-[#7945ff] text-indigo-50 text-center p-4">
+            <h2 class="uppercase text-5xl font-bold">PAUSE</h2>
+            <button
+              id="continue"
+              type="button"
+              class="bg-white text-xl text-black uppercase font-bold cursor-pointer rounded-lg transition-transform duration-300 active:translate-y-1 shadow-sm shadow-black py-2.5">
+              Continue
+            </button>
+            <button
+              id="quit"
+              type="button"
+              class="bg-[#fd6687] text-xl uppercase font-bold cursor-pointer rounded-lg transition-transform duration-300 active:translate-y-1 shadow-sm shadow-black py-2.5">
+              Quit Game
+            </button>
           </div>
         </div>
       </section>
