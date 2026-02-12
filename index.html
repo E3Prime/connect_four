@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>Connect Four</title>
+    <link rel="stylesheet" href="src/main.css" />
+    <script type="module" src="src/main.ts" defer></script>
+  </head>
+  <body class="min-h-svh grid">
+    <main class="grid font-[Roboto] bg-[#7945ff] overflow-x-hidden">
+      <!-- ANCHOR Main Menu -->
+      <section class="relative h-full grid place-items-center px-3" hidden>
+        <div id="menu" class="max-w-125 aspect-square w-full transition-transform duration-1000 content-center rounded-lg shadow-sm shadow-black border-3 border-black text-white p-7">
+          <img src="src/assets/images/logo.svg" alt="logo icon" class="mx-auto mb-6" />
+          <div class="flex flex-col justify-center gap-4 max-w-[90%] mx-auto">
+            <button
+              id="selectDifficulty"
+              type="button"
+              class="flex justify-between items-center bg-[#fd6687] rounded-lg border border-black shadow-lg shadow-black transition-all active:translate-y-1 active:shadow-none duration-300 cursor-pointer p-5">
+              <span class="text-sm md:text-lg uppercase font-semibold pointer-events-none">Player vs Cpu</span>
+              <img src="src/assets/images/player-vs-cpu.svg" alt="player vs cpu icon" class="pointer-events-none" width="70" height="70" />
+            </button>
+            <button
+              id="viewGameRules"
+              type="button"
+              class="bg-indigo-50 border-2 border-black shadow-lg shadow-black text-xl text-start uppercase font-semibold text-black rounded-lg transition-all active:translate-y-1 active:shadow-none duration-300 cursor-pointer p-5">
+              Game Rules
+            </button>
+          </div>
+        </div>
+        <div id="menuOverlay" class="absolute transition-all duration-700 w-2 grid place-items-center" hidden>
+          <div class="max-w-100 w-full aspect-video rounded-lg transition-all duration-500 content-center space-y-4 scale-[0.5] opacity-0 bg-[#7945ff] text-indigo-50 text-center p-4">
+            <h2 class="uppercase text-2xl font-semibold">Select Difficulty</h2>
+            <div>
+              <button id="easy" type="button" class="text-xl uppercase font-bold cursor-pointer hover:underline">Easy</button>
+            </div>
+            <div>
+              <button id="medium" type="button" class="text-xl uppercase font-bold cursor-pointer hover:underline">Medium</button>
+            </div>
+            <div>
+              <button id="hard" type="button" class="text-xl uppercase font-bold cursor-pointer hover:underline">Hard</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ANCHOR Game -->
+      <section id="game" class="relative h-full grid place-items-center transition-discrete transition-opacity px-3">
+        <div class="max-w-225 max-h-175 w-full aspect-9/16 space-y-5 p-3 border border-blue-500">
+          <div class="flex justify-between max-w-150 mx-auto font-semibold text-white">
+            <div>
+              <button type="button" class="bg-[#5c2dd5] rounded-full px-7 py-2">Menu</button>
+            </div>
+            <img src="src/assets/images/logo.svg" alt="logo icon" width="50" height="50" />
+            <div>
+              <button type="button" class="bg-[#5c2dd5] rounded-full px-7 py-2">Restart</button>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <div class="flex gap-3 items-center">
+              <div class="flex-1 flex items-center bg-white shadow-lg shadow-black rounded-lg p-2.5">
+                <img class="relative -ms-7" src="src/assets/images/you.svg" alt="player icon" width="45" height="45" />
+                <div class="flex-1 flex flex-col text-center font-semibold text-xl">
+                  <span>YOU</span>
+                  <span>0</span>
+                </div>
+              </div>
+
+              <div class="flex-1 flex flex-row-reverse items-center bg-white shadow-lg shadow-black rounded-lg p-2.5">
+                <img class="relative -me-7" src="src/assets/images/cpu.svg" alt="cpu icon" width="45" height="45" />
+                <div class="flex-1 flex flex-col text-center font-semibold text-xl">
+                  <span>CPU</span>
+                  <span>0</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="board" class="grid grid-cols-7 gap-3 relative z-10 bg-indigo-50 p-1.5 rounded-lg"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ANCHOR Game Rules -->
+      <section class="h-full grid place-items-center px-3" hidden>
+        <div
+          id="gameRules"
+          class="max-w-118.75 aspect-square w-full transition-transform duration-1000 border-3 border-black bg-indigo-50 rounded-lg shadow-sm shadow-black p-3 space-y-5 fly-from-right">
+          <h1 class="uppercase text-center text-6xl font-extrabold">Rules</h1>
+
+          <div class="space-y-1.5">
+            <h3 class="text-xl text-[#7945ff] font-semibold uppercase">Objective</h3>
+            <p>Be the first player to connect 4 of the same colored discs in a row (either vertically, horizontally, or diagonally).</p>
+          </div>
+
+          <div>
+            <h3 class="text-xl text-[#7945ff] font-semibold uppercase mb-1.5">How to play</h3>
+            <ol class="space-y-2">
+              <li><span class="font-semibold">1.</span> Red goes first in the first game.</li>
+              <li><span class="font-semibold">2.</span> Players must alternate turns, and only one disc can be dropped in each turn.</li>
+              <li><span class="font-semibold">3.</span> The game ends when there is a 4-in-a-row or a stalemate.</li>
+              <li><span class="font-semibold">4.</span> The starter of the previous game goes second on the next game.</li>
+            </ol>
+          </div>
+
+          <div class="text-center">
+            <button type="button" class="relative -bottom-14 transform duration-300 active:translate-y-1 cursor-pointer">
+              <img src="src/assets/images/icon-check.svg" alt="icon check" class="pointer-events-none" />
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
